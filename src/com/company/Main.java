@@ -1,9 +1,13 @@
 package com.company;
 
+
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Session;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class Main {
@@ -21,7 +25,8 @@ public class Main {
 
         Main jpa = new Main();
         try {
-            jpa.setUp();
+            //jpa.setUp();
+            jpa.listStudents();
         }
         catch(Exception e){
             e.printStackTrace();
@@ -56,6 +61,26 @@ public class Main {
             }
             finally {
                 session.close();
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        public void listStudents() {
+            Session session = factory.openSession();
+
+            try {
+                CriteriaQuery<Student> cq = session.getCriteriaBuilder().createQuery(Student.class);
+                Root<Student> root = cq.from(Student.class);
+                cq.select(root);
+                List<Student> students = session.createQuery(cq).getResultList();
+                System.out.println("Studentlist: ");
+                for(Student s : students) {
+                    System.out.println(s.getFirstName() + " " + s.getLastName() + " " + s.getEmail());
+                }
+                System.out.println("");
+            }
+            catch (Exception e){
+                e.printStackTrace();
             }
         }
 
