@@ -38,7 +38,7 @@ public class Main {
             Transaction tx = session.beginTransaction();
 
             try{
-                Student student1 = new Student("Vincent", "Maes", "vincent-maes-@hotmail.com", "+32474778073");
+                Student student1 = new Student("Vincent", "Maes", "vincent-maes@hotmail.com", "+32474779074");
                 session.save(student1);
 
                 MarksDetails marksDetails1 = new MarksDetails("English", 20, 16, "Pass");
